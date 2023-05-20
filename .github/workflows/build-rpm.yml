@@ -1,0 +1,34 @@
+name: Build k3s RPM
+
+on:
+  repository_dispatch:
+    types: [k3s-release]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup RPMBuild environment
+      run: |
+        sudo apt-get install rpm
+        mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+        echo '%_topdir %(echo $HOME)/rpmbuild' > ~/.rpmmacros
+
+    - name: Download k3s binary
+      run: |
+        curl -L -o ~/rpmbuild/SOURCES/k3s https://github.com/k3s-io/k3s/releases/latest/download/k3s
+
+    - name: Build RPM
+      run: |
+        cp src/ ~/rpmbuild/SPECS/
+        rpmbuild -ba ~/rpmbuild/SPECS/src/k3s.spec
+
+    - name: Upload RPM
+      uses: actions/upload-artifact@v2
+      with:
+        name: k3s.rpm
+        path: ~/rpmbuild/RPMS/**/*.rpm
