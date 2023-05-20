@@ -50,7 +50,7 @@ jobs:
 
     - name: 💼 Install RPM
       run: |
-        docker exec -it fedora bash -c "dnf install -y /rpms/k3s.rpm"
+        docker exec -i fedora bash -c "dnf install -y /rpms/k3s.rpm"
 
     - name: 🧪 Test k3s
       run: |
