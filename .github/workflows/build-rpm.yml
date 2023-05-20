@@ -1,4 +1,4 @@
-name: 📦 Build k3s RPM
+name: Build and Test k3s RPM
 
 on:
   schedule:
@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 🔄 Checkout code
-      uses: actions/checkout@v3
+    - name: 📦 Checkout code
+      uses: actions/checkout@v2
 
-    - name: 🧰 Setup RPMBuild environment
+    - name: 🛠️ Setup RPMBuild environment
       run: |
         sudo apt-get install rpm
         mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
@@ -25,12 +25,32 @@ jobs:
 
     - name: 🏭 Build RPM
       run: |
-        cp src/scripts/* ~/rpmbuild/SOURCES/
-        cp src/k3s.spec ~/rpmbuild/SPECS/k3s.spec
-        rpmbuild -ba ~/rpmbuild/SPECS/k3s.spec
+        cp -r src/ ~/rpmbuild/SPECS/
+        rpmbuild -ba ~/rpmbuild/SPECS/src/k3s.spec
 
-    - name: 🚚 Upload RPM
+    - name: 📤 Upload RPM
       uses: actions/upload-artifact@v3
       with:
         name: k3s.rpm
         path: ~/rpmbuild/RPMS/**/*.rpm
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Download RPM
+      uses: actions/download-artifact@v3
+      with:
+        name: k3s.rpm
+
+    - name: 🐧 Setup Fedora environment
+      run: docker run -d --name fedora -v $PWD:/rpms fedora
+
+    - name: 💼 Install RPM
+      run: |
+        docker exec -it fedora bash -c "dnf install -y /rpms/k3s.rpm"
+
+    - name: 🧪 Test k3s
+      run: |
+        docker exec -it fedora bash -c "k3s --version"
