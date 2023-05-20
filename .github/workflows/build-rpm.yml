@@ -25,7 +25,8 @@ jobs:
 
     - name: 🏭 Build RPM
       run: |
-        cp -r src/ ~/rpmbuild/SPECS/
+        cp -r src/scripts/ ~/rpmbuild/SOURCES/
+        cp src/k3s.spec ~/rpmbuild/SPECS/k3s.spec
         rpmbuild -ba ~/rpmbuild/SPECS/src/k3s.spec
 
     - name: 🚚 Upload RPM
