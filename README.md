@@ -1,5 +1,7 @@
 ﻿# k3s RPM package for rpm-ostree based systems
 
+[![📦 Build k3s RPM](https://github.com/pipelinedave/k3s-rpm/actions/workflows/build-rpm.yml/badge.svg?event=workflow_dispatch)](https://github.com/pipelinedave/k3s-rpm/actions/workflows/build-rpm.yml)
+
 This project provides a way to install [k3s](https://k3s.io/), a lightweight Kubernetes distribution, on rpm-ostree based systems like Fedora CoreOS where the traditional k3s setup script does not work.
 
 rpm-ostree based systems use an image-based approach to the OS, combining the best features of a container (atomic updates, rollbacks) with those of a traditional Linux distribution (a familiar, mutable /etc, and fully integrated system). However, this model makes it challenging to install software that expects to be able to write to the host filesystem. The traditional k3s setup script is an example of such software.
