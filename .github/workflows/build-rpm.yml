@@ -1,8 +1,8 @@
 name: Build k3s RPM
 
 on:
-  repository_dispatch:
-    types: [k3s-release]
+  schedule:
+    - cron:  '0 0 * * *'
 
 jobs:
   build:

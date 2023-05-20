@@ -27,7 +27,9 @@ mkdir -p %{buildroot}/usr/local/bin
 mkdir -p %{buildroot}/etc/bash_completion.d
 cp %{SOURCE0} %{buildroot}/usr/local/bin/k3s
 cp %{SOURCE1} %{buildroot}/usr/local/bin/k3s-uninstall.sh
-cp %{SOURCE2} %{buildroot}/etc/bash_completion.d/k3s
+cp %{SOURCE1} %{buildroot}/usr/local/bin/k3s-agent-uninstall.sh
+cp %{SOURCE3} %{buildroot}/usr/local/bin/k3s-killall.sh
+cp %{SOURCE4} %{buildroot}/etc/bash_completion.d/k3s
 chmod +x %{buildroot}/usr/local/bin/k3s
 chmod +x %{buildroot}/usr/local/bin/k3s-uninstall.sh
 
@@ -38,4 +40,3 @@ chmod +x %{buildroot}/usr/local/bin/k3s-uninstall.sh
 
 %changelog
 # You can add the changelog here.
-
