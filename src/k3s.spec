@@ -1,5 +1,5 @@
 Name: k3s
-Version: 0.0.1  # replace with actual version
+Version: 0.0.1
 Release: 1%{?dist}
 Summary: Lightweight Kubernetes
 
@@ -12,7 +12,7 @@ Source2: ./k3s-agent-uninstall.sh
 Source3: ./k3s-killall.sh
 Source4: ./k3s.bash-completion
 
-BuildArch: x86_64  # or whatever architecture you're on
+BuildArch: x86_64
 
 %description
 k3s is a highly available, certified Kubernetes distribution designed
@@ -20,7 +20,6 @@ for production workloads in unattended, resource-constrained, remote
 locations or inside IoT appliances.
 
 %prep
-# We don't need to do anything here, because there's no compilation needed.
 
 %install
 mkdir -p %{buildroot}/usr/local/bin
@@ -39,4 +38,3 @@ chmod +x %{buildroot}/usr/local/bin/k3s-uninstall.sh
 /etc/bash_completion.d/k3s
 
 %changelog
-# You can add the changelog here.
