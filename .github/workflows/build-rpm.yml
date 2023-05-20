@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📦 Checkout code
+    - name: 🔄 Checkout code
       uses: actions/checkout@v3
 
-    - name: 🛠️ Setup RPMBuild environment
+    - name: 🧰 Setup RPMBuild environment
       run: |
         sudo apt-get install rpm
         mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
@@ -25,10 +25,11 @@ jobs:
 
     - name: 🏭 Build RPM
       run: |
-        cp -r src/ ~/rpmbuild/SPECS/
-        rpmbuild -ba ~/rpmbuild/SPECS/src/k3s.spec
+        cp src/scripts/* ~/rpmbuild/SOURCES/
+        cp src/k3s.spec ~/rpmbuild/SPECS/k3s.spec
+        rpmbuild -ba ~/rpmbuild/SPECS/k3s.spec
 
-    - name: 📤 Upload RPM
+    - name: 🚚 Upload RPM
       uses: actions/upload-artifact@v3
       with:
         name: k3s.rpm
