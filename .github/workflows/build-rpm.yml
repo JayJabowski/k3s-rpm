@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: 🔄 Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: 🧰 Setup RPMBuild environment
       run: |
@@ -30,7 +30,7 @@ jobs:
         rpmbuild -ba ~/rpmbuild/SPECS/k3s.spec
 
     - name: 🚚 Upload RPM
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: k3s.rpm
         path: ~/rpmbuild/RPMS/**/*.rpm
