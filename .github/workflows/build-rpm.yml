@@ -27,7 +27,7 @@ jobs:
       run: |
         cp -r src/scripts/ ~/rpmbuild/SOURCES/
         cp src/k3s.spec ~/rpmbuild/SPECS/k3s.spec
-        rpmbuild -ba ~/rpmbuild/SPECS/src/k3s.spec
+        rpmbuild -ba ~/rpmbuild/SPECS/k3s.spec
 
     - name: 🚚 Upload RPM
       uses: actions/upload-artifact@v2
