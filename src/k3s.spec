@@ -31,10 +31,14 @@ cp %{SOURCE3} %{buildroot}/usr/local/bin/k3s-killall.sh
 cp %{SOURCE4} %{buildroot}/etc/bash_completion.d/k3s
 chmod +x %{buildroot}/usr/local/bin/k3s
 chmod +x %{buildroot}/usr/local/bin/k3s-uninstall.sh
+chmod +x %{buildroot}/usr/local/bin/k3s-agent-uninstall.sh
+chmod +x %{buildroot}/usr/local/bin/k3s-killall.sh
 
 %files
 /usr/local/bin/k3s
 /usr/local/bin/k3s-uninstall.sh
+/usr/local/bin/k3s-agent-uninstall.sh
+/usr/local/bin/k3s-killall.sh
 /etc/bash_completion.d/k3s
 
 %changelog
