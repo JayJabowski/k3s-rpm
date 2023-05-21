@@ -46,16 +46,8 @@ jobs:
         name: k3s
         path: ${{ github.workspace }}/rpms
 
-    - name: 🐧 Setup Fedora environment
-      run: docker run -d --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora tail -f /dev/
-
-    - name: 💼 Install RPM
-      run: |
-        docker exec -i fedora bash -c "dnf install -y /rpms/k3s.rpm"
-
-    - name: 🧪 Test k3s
-      run: |
-        docker exec -it fedora bash -c "k3s --version"
+    - name: 💼 Install RPM and 🧪 Test k3s
+      run: docker run --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora bash -c "dnf install -y /rpms/k3s.rpm && k3s --version"
 
   upload:
     needs: test
