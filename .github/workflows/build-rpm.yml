@@ -29,10 +29,10 @@ jobs:
         cp src/k3s.spec ~/rpmbuild/SPECS/k3s.spec
         rpmbuild -ba ~/rpmbuild/SPECS/k3s.spec
 
-    - name: 🚚 Upload RPM
+    - name: 🚚 Temporarily store RPM
       uses: actions/upload-artifact@v3
       with:
-        name: k3s.rpm
+        name: k3s
         path: ~/rpmbuild/RPMS/**/*.rpm
 
   test:
@@ -43,15 +43,33 @@ jobs:
     - name: 📥 Download RPM
       uses: actions/download-artifact@v3
       with:
-        name: k3s.rpm
+        name: k3s
+        path: /rpms
 
     - name: 🐧 Setup Fedora environment
-      run: docker run -d --name fedora -v $PWD:/rpms fedora
+      run: docker run -d --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora
 
     - name: 💼 Install RPM
       run: |
-        docker exec -i fedora bash -c "dnf install -y /k3s.rpm"
+        docker exec -i fedora bash -c "dnf install -y /rpms/k3s.rpm"
 
     - name: 🧪 Test k3s
       run: |
         docker exec -it fedora bash -c "k3s --version"
+
+  upload:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Download RPM
+      uses: actions/download-artifact@v3
+      with:
+        name: k3s
+        path: /rpms
+
+    - name: 🚚 Upload RPM
+      uses: actions/upload-artifact@v3
+      with:
+        name: k3s
+        path: /rpms/k3s.rpm
