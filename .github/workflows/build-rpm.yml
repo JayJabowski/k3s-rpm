@@ -54,7 +54,7 @@ jobs:
     - name: 💼 Install RPM and 🧪 Test k3s
       run: docker run --name fedora -v ${{ github.workspace }}/x86_64/:/rpms fedora bash -c "dnf install -y /rpms/k3s-*.rpm && k3s --version"
 
-  upload:
+  release:
     needs: test
     runs-on: ubuntu-latest
 
@@ -64,8 +64,10 @@ jobs:
       with:
         name: k3s
 
-    - name: 🚚 Upload RPM
-      uses: actions/upload-artifact@v3
+    - name: 📤 Upload RPM to GitHub Releases
+      uses: actions/upload-release-asset@v1
       with:
-        name: k3s
-        path: k3s.rpm
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ github.workspace }}/x86_64/k3s-*.rpm
+        asset_name: k3s-*.rpm
+        asset_content_type: application/x-rpm
