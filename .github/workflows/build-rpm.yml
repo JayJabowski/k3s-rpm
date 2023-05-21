@@ -44,7 +44,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: k3s
-        path: /rpms
+        path: ${{ github.workspace }}/rpms
 
     - name: 🐧 Setup Fedora environment
       run: docker run -d --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora
