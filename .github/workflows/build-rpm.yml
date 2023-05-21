@@ -47,13 +47,12 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: k3s
-        path: k3s.rpm
 
     - name: Display structure of downloaded files
       run: ls -R
 
     - name: 💼 Install RPM and 🧪 Test k3s
-      run: docker run --name fedora -v ${{ github.workspace }}:/rpms fedora bash -c "dnf install -y /rpms/k3s.rpm && k3s --version"
+      run: docker run --name fedora -v ${{ github.workspace }}/x86_64/:/rpms fedora bash -c "dnf install -y /rpms/k3s-*.rpm && k3s --version"
 
   upload:
     needs: test
