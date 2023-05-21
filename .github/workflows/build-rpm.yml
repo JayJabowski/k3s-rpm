@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: k3s
-        path: ~/rpmbuild/RPMS/**/k3s.rpm
+        path: ~/rpmbuild/RPMS/**/*.rpm
 
   test:
     needs: build
