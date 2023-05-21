@@ -47,7 +47,7 @@ jobs:
         path: ${{ github.workspace }}/rpms
 
     - name: 🐧 Setup Fedora environment
-      run: docker run -d --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora
+      run: docker run -d --name fedora -v ${{ github.workspace }}/rpms:/rpms fedora tail -f /dev/
 
     - name: 💼 Install RPM
       run: |
