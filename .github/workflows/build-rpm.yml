@@ -71,7 +71,6 @@ jobs:
       with:
         files: |
           ${{ github.workspace }}/x86_64/k3s-*.rpm
-        tag_name: ${{ github.ref }}
         body: |
           k3s RPM built from commit ${{ github.sha }}
         draft: false
