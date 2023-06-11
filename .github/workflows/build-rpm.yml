@@ -65,9 +65,21 @@ jobs:
         name: k3s
 
     - name: 📤 Upload RPM to GitHub Releases
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ${{ github.workspace }}/x86_64/k3s-*.rpm
-        asset_name: k3s-*.rpm
-        asset_content_type: application/x-rpm
+        files: |
+          ${{ github.workspace }}/x86_64/k3s-*.rpm
+        tag_name: ${{ github.ref }}
+        body: |
+          k3s RPM built from commit ${{ github.sha }}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: 📤 Upload RPM to GitHub Releases
+    #   uses: actions/upload-release-asset@v1
+    #   with:
+    #     upload_url: ${{ github.event.release.upload_url }}
+    #     asset_path: ${{ github.workspace }}/x86_64/k3s-*.rpm
+    #     asset_name: k3s-*.rpm
+    #     asset_content_type: application/x-rpm
