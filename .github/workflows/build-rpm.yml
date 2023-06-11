@@ -48,8 +48,8 @@ jobs:
       with:
         name: k3s
 
-    - name: Display structure of downloaded files
-      run: ls -R
+    # - name: Display structure of downloaded files
+    #   run: ls -R
 
     - name: 💼 Install RPM and 🧪 Test k3s
       run: docker run --name fedora -v ${{ github.workspace }}/x86_64/:/rpms fedora bash -c "dnf install -y /rpms/k3s-*.rpm && k3s --version"
@@ -57,6 +57,8 @@ jobs:
   release:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: 📥 Download RPM
