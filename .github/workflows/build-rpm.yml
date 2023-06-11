@@ -73,6 +73,7 @@ jobs:
           ${{ github.workspace }}/x86_64/k3s-*.rpm
         body: |
           k3s RPM built from commit ${{ github.sha }}
+        tag_name: 'main'
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
